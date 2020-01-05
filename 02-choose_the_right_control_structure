@@ -1,0 +1,60 @@
+class Document
+  attr_accessor :writable
+  attr_reader :title, :author, :content
+  # Much of the class omitted...
+  def title=( new_title )
+
+    # The following conditionals all do the same thing
+    if @writable
+      @title = new_title
+    end
+
+    # This is not recommended
+    if not @read_only
+      @title = new_title
+    end
+
+    unless @read_only
+      @title = new_title
+    end
+
+    # Should do this since aboce block only has one statement
+    @title = new_title unless @read_only
+    @title = new_title if @writable
+
+  end
+# Similar author= and content= methods omitted...
+end
+
+document = Document.new
+
+################ While/Until Loops ################
+# Not recommended
+while ! document.is_printed?
+  document.print_next_page
+end
+
+# Recommended
+until document.is_printed?
+  document.print_next_page
+end
+
+# Since each loop above has one statement, should fold
+document.print_next_page while document.pages_available?
+document.print_next_page until document.printed?
+
+##### Check 02a.rb for info on assignment
+while next_object = get_next_object
+  # Will run until get_next_object returns nil or false
+end 
+
+until (next_object = get_next_object) == nil
+  # Will run until get_next_object returns nil
+end
+
+until (next_object = get_next_object).nil?
+  # Same as above
+end
+
+
+#####################################################
